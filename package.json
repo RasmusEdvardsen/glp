@@ -1,0 +1,25 @@
+{
+  "name": "good-logging-practice",
+  "version": "1.0.6",
+  "description": "Intended for gxp/samd regulated environments hosted in the cloud",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "log",
+    "logging",
+    "gxp",
+    "samd",
+    "cloud"
+  ],
+  "author": "Rasmus Edvardsen",
+  "license": "ISC",
+  "dependencies": {
+    "azure-storage": "^2.10.3"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.4"
+  }
+}
