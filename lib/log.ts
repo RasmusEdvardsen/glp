@@ -16,7 +16,7 @@ function errorOrRes(err: any, res: any, logLevel?: LogLevel, text?: string) {
     if (err) {
         console.log(err);
         if (err.statusCode === 404) {
-            // todo: has risk of endless recursion.
+            // todo has risk of endless recursion.
             // can get aroung by looking at logLevel/text - only passed on first attempt.
             let date = new Date();
             const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.keyToken);
@@ -33,15 +33,9 @@ function errorOrRes(err: any, res: any, logLevel?: LogLevel, text?: string) {
 }
 
 export async function init(obj: IAzureConfig) {
-    if (obj instanceof AzureConfigSasToken) {
-        azureConfig = obj;
-        await (azureConfig as AzureConfigSasToken).refreshToken();
-    } else if (obj instanceof AzureConfigSharedKey) {
-        azureConfig = obj;
-    }
-    if (obj.container) {
-        azureConfig.container = obj.container;
-    }
+    if (obj instanceof AzureConfigSasToken) 
+        await obj.refreshToken();
+    azureConfig = obj;
 }
 
 export function log(logLevel: LogLevel, text: string) {
@@ -54,3 +48,5 @@ export function log(logLevel: LogLevel, text: string) {
         (err, res) => errorOrRes(err, res, logLevel, text)
     );
 }
+
+// todo handle sastoken being expired

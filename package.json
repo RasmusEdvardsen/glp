@@ -1,6 +1,6 @@
 {
   "name": "good-logging-practice",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Intended for gxp/samd regulated environments hosted in the cloud",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,7 +15,7 @@
     "cloud"
   ],
   "author": "Rasmus Edvardsen",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "azure-storage": "^2.10.3"
   },

@@ -5,26 +5,26 @@ export interface IAzureConfig {
 }
 
 export class AzureConfigSharedKey implements IAzureConfig {
-    origin: string = "";
-    keyToken: string = "";
-    container: string = "log";
-    constructor(origin: string, keyToken: string, container?: string) {
+    origin: string;
+    keyToken: string;
+    container: string;
+    constructor(origin: string, keyToken: string, container: string = "log") {
         this.origin = origin;
         this.keyToken = keyToken;
-        this.container = container || "log";
+        this.container = container;
     }
 };
 
 export class AzureConfigSasToken implements IAzureConfig {
-    origin: string = "";
+    origin: string;
     getSasToken: () => Promise<string>;
     keyToken: string = "";
-    container: string = "log";
+    container: string;
 
-    constructor(origin: string, getSasToken: () => Promise<string>, container?: string) {
+    constructor(origin: string, getSasToken: () => Promise<string>, container: string = "log") {
         this.origin = origin;
         this.getSasToken = getSasToken;
-        this.container = container || "log";
+        this.container = container;
     }
     
     async refreshToken(): Promise<void> {
