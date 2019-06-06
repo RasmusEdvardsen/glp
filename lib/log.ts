@@ -37,7 +37,7 @@ export function init(obj: any) {
     if (obj.container) azureConfig.container = obj.container;
 }
 
-export function log(logLevel: any, text: string) {
+export function log(logLevel: LogLevel, text: string) {
     let date = new Date();
     const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.sasToken);
     blobService.appendBlockFromText(
