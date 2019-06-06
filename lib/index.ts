@@ -1,9 +1,9 @@
 import { log, init } from './log';
 import { LogLevel } from './LogLevel';
-import { AzureConfig } from './models/AzureConfig';
+import { AzureConfigSasToken, AzureConfigSharedKey, IAzureConfig } from './models/AzureConfig';
 
-export function credentials(obj: AzureConfig) {
-    init(obj);
+export async function credentials(obj: IAzureConfig) {
+    init(obj)
 }
 
 export function info(text: string) {

@@ -1,14 +1,14 @@
 import { createBlobServiceWithSas } from 'azure-storage';
 import { getLogLevelString, LogLevel } from './logLevel';
 import { formatDate, formatTime } from './util/date';
-import { AzureConfig } from './models/AzureConfig';
+import { AzureConfigSasToken, AzureConfigSharedKey, IAzureConfig } from './models/AzureConfig';
 
 /**
  * minimum sas requirements: Blob service, Object resource type, Write permission
  */
-const azureConfig: AzureConfig = {
+let azureConfig: AzureConfigSasToken | AzureConfigSharedKey = {
     origin: "",
-    sasToken: "",
+    keyToken: "",
     container: "log",
 };
 
@@ -19,8 +19,9 @@ function errorOrRes(err: any, res: any, logLevel?: LogLevel, text?: string) {
             // todo: has risk of endless recursion.
             // can get aroung by looking at logLevel/text - only passed on first attempt.
             let date = new Date();
-            const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.sasToken);
-            blobService.createAppendBlobFromText(azureConfig.container,
+            const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.keyToken);
+            blobService.createAppendBlobFromText(
+                azureConfig.container,
                 formatDate(date) + ".txt",
                 `${formatTime(date)} ${getLogLevelString(logLevel || LogLevel.INFO)} ${text}` + "\n",
                 (err, res) => errorOrRes(err, res));
@@ -31,17 +32,24 @@ function errorOrRes(err: any, res: any, logLevel?: LogLevel, text?: string) {
     }
 }
 
-export function init(obj: any) {
-    azureConfig.origin = obj.origin;
-    azureConfig.sasToken = obj.sasToken;
-    if (obj.container) azureConfig.container = obj.container;
+export async function init(obj: IAzureConfig) {
+    if (obj instanceof AzureConfigSasToken) {
+        azureConfig = obj;
+        await (azureConfig as AzureConfigSasToken).refreshToken();
+    } else if (obj instanceof AzureConfigSharedKey) {
+        azureConfig = obj;
+    }
+    if (obj.container) {
+        azureConfig.container = obj.container;
+    }
 }
 
 export function log(logLevel: LogLevel, text: string) {
     let date = new Date();
-    const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.sasToken);
+    const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.keyToken);
     blobService.appendBlockFromText(
-        azureConfig.container, formatDate(date) + ".txt",
+        azureConfig.container,
+        formatDate(date) + ".txt",
         `${formatTime(date)} ${getLogLevelString(logLevel)} ${text}` + "\n",
         (err, res) => errorOrRes(err, res, logLevel, text)
     );
