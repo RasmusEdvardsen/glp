@@ -8,7 +8,7 @@ export function prependZero(n: number, u?: number): string {
 export function formatDate(date: Date) {
     const formatted =
         date.getFullYear().toString()
-        + "_" + prependZero(date.getMonth())
+        + "_" + prependZero(date.getMonth() + 1)
         + "_" + prependZero(date.getDate());
     return formatted;
 }
