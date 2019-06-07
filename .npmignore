@@ -1,1 +1,3 @@
-# because .gitignore.
+# if no .npmignore, .gitignore will be used instead.
+
+todo.txt

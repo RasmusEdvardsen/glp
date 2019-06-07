@@ -1,0 +1,11 @@
+todo test script.
+
+todo try to use REST instead, so no dependency needed.
+
+todo have azure comm be in separate file
+
+todo has risk of endless recursion. can get aroung by looking at logLevel/text - only passed on first attempt.
+
+todo handle sastoken being expired
+
+todo or with shared key credentials **(TODO)** for the same

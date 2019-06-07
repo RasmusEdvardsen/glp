@@ -16,8 +16,6 @@ function errorOrRes(err: any, res: any, logLevel?: LogLevel, text?: string) {
     if (err) {
         console.log(err);
         if (err.statusCode === 404) {
-            // todo has risk of endless recursion.
-            // can get aroung by looking at logLevel/text - only passed on first attempt.
             let date = new Date();
             const blobService = createBlobServiceWithSas(azureConfig.origin, azureConfig.keyToken);
             blobService.createAppendBlobFromText(
@@ -48,5 +46,3 @@ export function log(logLevel: LogLevel, text: string) {
         (err, res) => errorOrRes(err, res, logLevel, text)
     );
 }
-
-// todo handle sastoken being expired
