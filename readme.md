@@ -3,25 +3,33 @@
 For now, GLP will log to Azure's Blob Storage, allowing you to log events from the frontend as well.
 ## Usage
 ### Init
-GLP needs to be initialized with an azure account's sastoken to blob storage, or with shared key credentials **(TODO)** for the same.
-Minimum sas token requirements: Blob service, Object resource type, Write permission.
-For sas tokens, initializing works as follows:
+Good Logging Practice can be initialize in the following ways:
+ - Shared key credentials:
+	 - storagename and storagekey is required.
+ - Sas token:
+	 - I haven't implemented token refreshes yet (will be soon).
+	 - Minimum sas token requirements: Blob service, Object resource type, Write permission.
 
-    const  {AzureConfig,  credentials,  info}  =  require("good-logging-practice");
-    let  s  =  new  AzureConfig(
-	    "https://{storagename}.blob.core.windows.net",
-	    "{sastoken}"
-    );
-Where AzureConfig is a class that takes an origin, a sas token, and an optional containername that defaults to *log*, and a sas token that looks somewhat like this:
+For shared key creds, initializing works as follows:  
 
-    ?sv=2018-03-28&ss={service_type}&srt={resource_type}&sp={permissions}&se={endtime}&st={starttime}&spr={protocol}&sig={signature}
+	import { AzureSharedKey, info, init } from 'good-logging-practice';
+	let az: AzureSharedKey = new AzureSharedKey(
+		{storagename},
+		{sharedkey},
+		{origin},
+		{logging container - defaults to 'log'}
+	);
+
+	init(az);
 ### Log
 Currently, 3 levels of logging is supported, those 3 being **INFO**, **WARN** and **ERROR**.
 Example log to **INFO**:
 
-    info("This is a log to my 'log' container in azure storage");
-
+	await info("This is a log to my 'log' container in azure storage");
+Awaiting the call isn't necessary, it just returns a boolean, stating whether it succeeded or not.
+## Security
+Please do use CORS to only allow domains that you wish to be able to access your azure storage account. 
 ## Future
- - Ability to log both to the console and to Azure at the same time.
- - Support for other clouds
- - Logged in user messages
+- Ability to log both to the console and to Azure at the same time.
+- Support for other clouds
+- Logged in user messages
