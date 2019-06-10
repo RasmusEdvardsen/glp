@@ -42,19 +42,20 @@ function getBlobUrl(serviceUrl: ServiceURL, container: string, date: Date) {
     return AppendBlobURL.fromBlobURL(blobURL);
 }
 
-export async function log(service: ServiceURL, caller: IAzure, logLevel: LogLevel, ...rest: string[]): Promise<boolean> {
+export async function log(service: ServiceURL, caller: IAzure, logLevel: LogLevel, ...rest: string[]): Promise<number> {
     let date = new Date();
     let text = getTextFormatted(date, logLevel, ...rest);
     const blobUrl = getBlobUrl(service, caller.container, date);
     try {
-        return (await blobUrl.appendBlock(Aborter.none, text, text.length))._response.status === 201;
+        return (await blobUrl.appendBlock(Aborter.none, text, text.length))._response.status;
     } catch (error) {
-        if (error.statusCode !== 404) return false;
+        if (error.statusCode === 403) return 403;
+        if (error.statusCode !== 404) return 500;
         
         const appendBlobCreateResponse = await blobUrl.create(Aborter.none);
-        if (appendBlobCreateResponse._response.status !== 201) return false;
+        if (appendBlobCreateResponse._response.status !== 201) return 500;
         
-        return (await blobUrl.appendBlock(Aborter.none, text, text.length))._response.status === 201;
+        return (await blobUrl.appendBlock(Aborter.none, text, text.length))._response.status;
     }
 }
 //#endregion log

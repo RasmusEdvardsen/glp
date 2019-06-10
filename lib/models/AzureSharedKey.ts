@@ -17,7 +17,7 @@ export class AzureSharedKey implements IAzure {
 
     async log(logLevel: LogLevel, ...text: string[]): Promise<boolean> {
         let service = createSharedKeyService(this);
-        let success = await log(service, this, logLevel, ...text)
-        return success;
+        let response = await log(service, this, logLevel, ...text)
+        return `${response}`.startsWith("2");
     }
 };

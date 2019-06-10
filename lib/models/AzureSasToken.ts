@@ -28,7 +28,14 @@ export class AzureSasToken implements IAzure {
     async log(logLevel: LogLevel, ...text: string[]): Promise<boolean> {
         if (this.keyToken.length === 0) await this.refreshToken();
         let service = createSasTokenService(this);
-        let success = await log(service, this, logLevel, ...text)
-        return success;
+
+        let response = await log(service, this, logLevel, ...text);
+        if (response === 403) {
+            await this.refreshToken();
+            let retry = createSasTokenService(this);
+            response = await log(retry, this, logLevel, ...text);
+        }
+        
+        return `${response}`.startsWith("2");
     }
 };

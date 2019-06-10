@@ -1,7 +1,7 @@
 {
   "name": "good-logging-practice",
-  "version": "1.1.2",
-  "description": "Intended for gxp/samd regulated environments hosted in the cloud",
+  "version": "1.1.3",
+  "description": "Logging package intended for gxp/samd regulated environments hosted in the cloud",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
