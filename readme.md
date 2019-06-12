@@ -7,7 +7,6 @@ Good Logging Practice can be initialize in the following ways:
  - Shared key credentials:
 	 - storagename and storagekey is required.
  - Sas token:
-	 - I haven't implemented token refreshes yet (will be soon).
 	 - Minimum sas token requirements: Blob service, Object resource type, Write permission.
 
 For shared key creds, initializing works as follows:  

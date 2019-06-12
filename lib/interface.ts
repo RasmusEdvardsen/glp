@@ -3,6 +3,9 @@ import { LogLevel } from './logLevel';
 
 let azure: IAzure;
 
+// use for config stuff.
+const configDef = {}
+
 export function init(obj: IAzure) {
     azure = obj;
 }
