@@ -8,9 +8,7 @@ MedLog can be initialize in the following ways:
 	 - storagename and storagekey is required.
  - Sas token:
 	 - Minimum sas token requirements: Blob service, Object resource type, Write permission.
-
 For shared key creds, initializing works as follows:  
-
 	import { AzureSharedKey, info, init } from 'med-log';
 	let az: AzureSharedKey = new AzureSharedKey(
 		{storagename},
@@ -22,11 +20,17 @@ For shared key creds, initializing works as follows:
 	init(az);
 ### Vue
 AzureSharedKey is NOT supported when used as a Vue plugin.
+Include a declaration file, e.g., med-log.d.ts, in your project (typically in src):
+	import Vue from 'vue';
 
+	declare module 'vue/types/vue' {
+		export interface Vue {
+			info: (...string: string[]) => Promise<string>;
+		}
+	}
 ### Log
 Currently, 3 levels of logging is supported, those 3 being **INFO**, **WARN** and **ERROR**.
 Example log to **INFO**:
-
 	await info("This is a log to my 'log' container in azure storage");
 Awaiting the call isn't necessary, it just returns a boolean, stating whether it succeeded or not.
 ## Security
