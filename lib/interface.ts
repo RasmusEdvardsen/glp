@@ -12,10 +12,10 @@ export function init(obj: IAzure) {
 
 export const MedLog = {
     install(Vue: any, options: any) {
-        Vue.MedLog = azure;
-        Vue.info = info;
-        Vue.warn = warn;
-        Vue.error = error;
+        Vue.prototype.MedLog = azure;
+        Vue.prototype.info = info;
+        Vue.prototype.warn = warn;
+        Vue.prototype.error = error;
     }
 }
 
