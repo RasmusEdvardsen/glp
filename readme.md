@@ -20,6 +20,9 @@ For shared key creds, initializing works as follows:
 	);
 
 	init(az);
+### Vue
+AzureSharedKey is NOT supported when used as a Vue plugin.
+
 ### Log
 Currently, 3 levels of logging is supported, those 3 being **INFO**, **WARN** and **ERROR**.
 Example log to **INFO**:
