@@ -1,6 +1,6 @@
 {
   "name": "med-log",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "Logging package intended for gxp/samd regulated environments hosted in the cloud",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
