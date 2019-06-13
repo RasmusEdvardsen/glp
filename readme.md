@@ -1,9 +1,9 @@
-# Good Logging Practice
+# Med Log
 ## What does it do
-For now, GLP will log to Azure's Blob Storage, allowing you to log events from the frontend as well.
+For now, MedLog will log to Azure's Blob Storage, allowing you to log events from the frontend as well.
 ## Usage
 ### Init
-Good Logging Practice can be initialize in the following ways:
+MedLog can be initialize in the following ways:
  - Shared key credentials:
 	 - storagename and storagekey is required.
  - Sas token:
@@ -11,7 +11,7 @@ Good Logging Practice can be initialize in the following ways:
 
 For shared key creds, initializing works as follows:  
 
-	import { AzureSharedKey, info, init } from 'good-logging-practice';
+	import { AzureSharedKey, info, init } from 'med-log';
 	let az: AzureSharedKey = new AzureSharedKey(
 		{storagename},
 		{sharedkey},
